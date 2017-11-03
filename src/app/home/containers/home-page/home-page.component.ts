@@ -15,7 +15,9 @@ import * as personActions from '../../+store/actions/person';
                         <h2>Manage</h2>
                     </div>
                     <button class="button is-primary" (click)="add()">ADD</button>
+                    <button class="button is-link">UPDATE(SOON)</button>
                     <button class="button is-warning" (click)="clear()">CLEAR</button>
+                    <button class="button is-black" (click)="github()">GITHUB</button>
                 </div>
             </div>
             <div class="columns">
@@ -74,5 +76,12 @@ export class HomePageComponent implements OnInit {
      */
     clear() {
         this.store.dispatch(new personActions.Reset());
+    }
+
+    /**
+     * Go to github repo
+     */
+    github() {
+        window.location.href = 'https://github.com/warapitiya/ngrx-example';
     }
 }
