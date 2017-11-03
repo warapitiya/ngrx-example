@@ -8,25 +8,46 @@ import * as personActions from '../../+store/actions/person';
 @Component({
     selector: 'app-home-page',
     template: `
-        <div class="container">
-            <div class="my-5">
-                <h2>Manage</h2>
-                <button class="btn btn-outline-primary" (click)="add()">ADD</button>
-                <button class="btn btn-outline-dark" (click)="clear()">CLEAR</button>
-            </div>
-        </div>
-        <div class="container">
-            <h2>Collections</h2>
-            <div class="row my-1" *ngFor="let person of person$ | async">
-                <div class="col-md-2">
-                    <img [src]="person.photo" width="60" alt="">
+        <section class="section">
+            <div class="columns">
+                <div class="column">
+                    <div class="title">
+                        <h2>Manage</h2>
+                    </div>
+                    <button class="button is-primary" (click)="add()">ADD</button>
+                    <button class="button is-warning" (click)="clear()">CLEAR</button>
                 </div>
-                <div class="col-md-2" [innerHtml]="person.name"></div>
-                <div class="col-md-1" [innerHtml]="person.age"></div>
-                <div class="col-md-2" [innerHtml]="person.gender"></div>
-                <div class="col-md-4" [innerHtml]="person.region"></div>
             </div>
-        </div>
+            <div class="columns">
+                <div class="column">
+                    <div class="title">
+                        <h2>Collections</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="columns" *ngFor="let person of person$ | async">
+                <div class="column">
+                    <img [src]="person.photo" width="64" alt="">
+                </div>
+                <div class="column">
+                    <p [innerHtml]="person.name"></p>
+                </div>
+                <div class="column">
+                    <div class="tags has-addons">
+                        <span class="tag is-black">age</span>
+                        <span class="tag is-primary" [innerHtml]="person.age"></span>
+                    </div>
+                </div>
+                <div class="column">
+                    <p><span class="tag"
+                             [ngClass]="{'is-info': person.gender === 'male', 'is-danger': person.gender === 'female'}"
+                             [innerHtml]="person.gender"></span></p>
+                </div>
+                <div class="column">
+                    <p [innerHtml]="person.region"></p>
+                </div>
+            </div>
+        </section>
     `,
     styles: []
 })
