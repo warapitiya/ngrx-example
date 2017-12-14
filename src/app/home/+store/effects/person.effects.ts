@@ -1,34 +1,38 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {Actions, Effect} from '@ngrx/effects';
-import {Observable} from 'rxjs/Observable';
-import {Action} from '@ngrx/store';
 import * as personActions from './../actions/person';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/observable/of';
+import {PersonService} from '../../services/person.service';
+import {catchError, map, switchMap} from 'rxjs/operators';
+import {of} from 'rxjs/observable/of';
 import {Person} from '../models/person';
-import 'rxjs/add/operator/map';
 
 @Injectable()
 export class PersonEffects {
 
+    constructor(private personService: PersonService,
+                private actions$: Actions) {
+    }
+
     @Effect()
-    load$: Observable<Action> = this.actions$
-        .ofType(personActions.LOAD)
-        .switchMap(() => {
-                return this.http.get('https://uinames.com/api/?ext')
-                    .map((result: Person) => ({
+    load$ = this.actions$.ofType(personActions.LOAD).pipe(
+        switchMap(() => {
+            return this.personService
+                .getPerson()
+                .pipe(
+                    map((person: Person) => ({
                         ...{
                             id: new Date().getTime()
                         },
-                        ...result
-                    }))
-                    .map((result: Person) => new personActions.LoadSuccess(result));
-            }
-        );
+                        ...person
+                    })),
+                    map((result: Person) => new personActions.LoadPersonSuccess(result)),
+                    catchError(error => {
+                        console.error('Check error ', error);
+                        return of(new personActions.LoadPersonFail());
+                    })
+                )
+        })
+    );
 
-    constructor(private http: HttpClient,
-                private actions$: Actions) {
-    }
 
 }

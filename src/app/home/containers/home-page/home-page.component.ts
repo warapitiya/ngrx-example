@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Person} from '../../+store/models/person';
 import {Store} from '@ngrx/store';
-import * as fromPerson from '../../+store/reducers/person';
+import * as fromStore from '../../+store';
 import * as personActions from '../../+store/actions/person';
 
 @Component({
@@ -56,26 +56,28 @@ import * as personActions from '../../+store/actions/person';
 export class HomePageComponent implements OnInit {
     person$: Observable<Person[]>;
 
-    constructor(private store: Store<fromPerson.State>) {
-        this.person$ = store.select(fromPerson.selectAll);
+    constructor(private store: Store<fromStore.HomeState>) {
+        this.person$ = store.select(fromStore.abc);
+        // this.person$.subscribe((e) => console.log(e),
+        //     (e) => console.error(e))
     }
 
     ngOnInit(): void {
-        this.store.dispatch(new personActions.Load());
+        this.store.dispatch(new personActions.LoadPerson());
     }
 
     /**
      * Add person Item
      */
     add() {
-        this.store.dispatch(new personActions.Load());
+        this.store.dispatch(new personActions.LoadPerson());
     }
 
     /**
      * Clear Person store
      */
     clear() {
-        this.store.dispatch(new personActions.Reset());
+        this.store.dispatch(new personActions.ResetPerson());
     }
 
     /**

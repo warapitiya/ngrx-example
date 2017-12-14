@@ -1,49 +1,30 @@
 import {Action} from '@ngrx/store';
 import {Person} from '../models/person';
 
-export const LOAD = '[Person] Load';
-export const LOAD_SUCCESS = '[Person] Load success';
-export const LOAD_FAIL = '[Person] Load fail';
-export const INSERT = '[Person] Insert';
-export const REMOVE = '[Person] Remove';
-export const RESET = '[Counter] Reset';
+export const LOAD = '[Person] Load Person';
+export const LOAD_SUCCESS = '[Person] Load Person success';
+export const LOAD_FAIL = '[Person] Load Person fail';
+export const RESET = '[Person] Person Reset';
 
-export class Load implements Action {
+export class LoadPerson implements Action {
     readonly type = LOAD;
 
     constructor() {
     }
 }
 
-export class LoadSuccess implements Action {
+export class LoadPersonSuccess implements Action {
     readonly type = LOAD_SUCCESS;
 
     constructor(public payload: Person) {
     }
 }
 
-export class LoadFail implements Action {
+export class LoadPersonFail implements Action {
     readonly type = LOAD_FAIL;
-
-    constructor() {
-    }
 }
 
-export class Insert implements Action {
-    readonly type = INSERT;
-
-    constructor(public payload: Person) {
-    }
-}
-
-export class Remove implements Action {
-    readonly type = REMOVE;
-
-    constructor(public payload: Person) {
-    }
-}
-
-export class Reset implements Action {
+export class ResetPerson implements Action {
     readonly type = RESET;
 
     constructor() {
@@ -51,9 +32,7 @@ export class Reset implements Action {
 }
 
 export type Actions
-    = Insert
-    | Remove
-    | Reset
-    | Load
-    | LoadSuccess
-    | LoadFail;
+    = ResetPerson
+    | LoadPerson
+    | LoadPersonSuccess
+    | LoadPersonFail;

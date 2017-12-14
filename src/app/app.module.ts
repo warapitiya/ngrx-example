@@ -5,9 +5,7 @@ import {AppComponent} from './app.component';
 import {StoreModule} from '@ngrx/store';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {HomeModule} from './home/home.module';
-import {reducers} from './app.reducer';
 import {EffectsModule} from '@ngrx/effects';
-import {PersonEffects} from './home/+store/effects/person.effects';
 import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
@@ -17,8 +15,8 @@ import {HttpClientModule} from '@angular/common/http';
     imports: [
         BrowserModule,
         HttpClientModule,
-        StoreModule.forRoot(reducers),
-        EffectsModule.forRoot([PersonEffects]),
+        StoreModule.forRoot({}),
+        EffectsModule.forRoot([]),
         StoreDevtoolsModule.instrument({
             maxAge: 25 //  Retains last 25 states
         }),
